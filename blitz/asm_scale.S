@@ -1,3 +1,4 @@
+.section .note.GNU-stack,"",%progbits
 
 #if defined(__EMX__)
 /* Due to strange behaviour of as.exe we use this macros */
