@@ -248,7 +248,8 @@ bool Blitz::normalize(QImage &img)
             break;
     }
     memset(&intensity, 0, sizeof(IntegerPixel));
-    for(high.red=255; high.red >= 0; --high.red){
+    for(int i=255; i >= 0; --i){
+        high.red=i;
         intensity.red += histogram[high.red].red;
         if(intensity.red > threshold_intensity)
             break;
