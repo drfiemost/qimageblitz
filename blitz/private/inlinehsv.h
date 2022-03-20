@@ -113,12 +113,12 @@ inline void InlineHSV::convertRGB2HSV(int red, int green, int blue)
                 (120*(g-b+delta)+delta)/(2*delta) + 300;
             break;
         case 1:                             // green is max component
-            h = (b > r) ? h = 120 + (120*(b-r)+delta)/(2*delta) :
+            h = (b > r) ? 120 + (120*(b-r)+delta)/(2*delta) :
                 60 + (120*(b-r+delta)+delta)/(2*delta);
             break;
         case 2:                             // blue is max component
-            h = (r > g) ? h = 240 + (120*(r-g)+delta)/(2*delta) :
-                h = 180 + (120*(r-g+delta)+delta)/(2*delta);
+            h = (r > g) ? 240 + (120*(r-g)+delta)/(2*delta) :
+                180 + (120*(r-g+delta)+delta)/(2*delta);
             break;
         }
     }
