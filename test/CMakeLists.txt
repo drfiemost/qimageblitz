@@ -15,7 +15,7 @@ ${QT_QTGUI_INCLUDE_DIR}
 
 set(blitztest_SRCS main.cpp mainwindow.cpp scaledialog.cpp)
 
-qt4_automoc(${blitztest_SRCS}) 
+set(CMAKE_AUTOMOC ON)
 
 if(COMMAND cmake_policy)
   cmake_policy(SET CMP0003 NEW)
