@@ -56,9 +56,9 @@ QImage Blitz::gradient(const QSize &size, const QColor &ca,
     QRgb rgb;
 
     if(eff == VerticalGradient || eff == HorizontalGradient){
-        register int rl = rca << 16;
-        register int gl = gca << 16;
-        register int bl = bca << 16;
+        int rl = rca << 16;
+        int gl = gca << 16;
+        int bl = bca << 16;
         QRgb *p;
         if(eff == VerticalGradient){
             int rcdelta = ((1<<16) / size.height()) * rDiff;
@@ -234,7 +234,7 @@ QImage Blitz::grayGradient(const QSize &size, unsigned char ca,
     unsigned char idx;
 
     if(eff == VerticalGradient || eff == HorizontalGradient){
-        register int val = ca << 16;
+        int val = ca << 16;
         unsigned char *p;
         if(eff == VerticalGradient){
             int delta = ((1<<16) / size.height()) * diff;
@@ -351,7 +351,7 @@ QImage Blitz::unbalancedGradient(const QSize &size, const QColor &ca,
     float ybal = yfactor/30.0f/size.height();
     float rat;
 
-    register int x, y;
+    int x, y;
     int rca, gca, bca, rcb, gcb, bcb;
     int rDiff = (rcb = cb.red())   - (rca = ca.red());
     int gDiff = (gcb = cb.green()) - (gca = ca.green());
@@ -511,7 +511,7 @@ QImage Blitz::grayUnbalancedGradient(const QSize &size, unsigned char ca,
     float ybal = yfactor/30.0f/size.height();
     float rat;
 
-    register int x, y;
+    int x, y;
     int diff = cb-ca;
 
     if(eff == VerticalGradient || eff == HorizontalGradient){
