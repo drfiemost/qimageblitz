@@ -353,7 +353,8 @@ QImage Blitz::oilPaint(QImage &img, float radius,
     int i, x, y, w, h, matrix_x, matrix_y;
     int edge = matrix_size/2;
     unsigned int max, value;
-    QRgb *dest, *src, *s, **scanblock;
+    QRgb *dest, *s, **scanblock;
+    [[maybe_unused]] QRgb *src;
 
     w = img.width();
     h = img.height();
