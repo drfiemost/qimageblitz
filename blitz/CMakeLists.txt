@@ -5,9 +5,6 @@ include(CheckIncludeFile)
 include_directories(
   ${CMAKE_SOURCE_DIR}  
   ${blitz_lib_BINARY_DIR} 
-  ${QT_INCLUDE_DIR}
-  ${QT_QTCORE_INCLUDE_DIR}  
-  ${QT_QTGUI_INCLUDE_DIR}
   )
 
 CHECK_INCLUDE_FILE(stdint.h HAVE_STDINT_H)
@@ -44,7 +41,7 @@ endif(COMMAND cmake_policy)
 
 add_library(qimageblitz SHARED ${blitz_LIB_SRCS} ${blitz_LIB_EXTRA_SRCS})
 
-target_link_libraries(qimageblitz ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY})
+target_link_libraries(qimageblitz Qt4::QtCore Qt4::QtGui)
 if (NOT CMAKE_COMPILER_IS_GNUCXX AND CMAKE_SYSTEM_NAME MATCHES SunOS)
     target_link_libraries(qimageblitz -lm -lsunmath)
 endif (NOT CMAKE_COMPILER_IS_GNUCXX AND CMAKE_SYSTEM_NAME MATCHES SunOS)

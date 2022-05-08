@@ -8,9 +8,6 @@ include_directories(
 ${CMAKE_SOURCE_DIR}
 ${blitztest_BINARY_DIR}
 ${blitz_lib_SOURCE_DIR}
-${QT_INCLUDE_DIR}
-${QT_QTCORE_INCLUDE_DIR}
-${QT_QTGUI_INCLUDE_DIR}
 )
 
 set(blitztest_SRCS main.cpp mainwindow.cpp scaledialog.cpp)
@@ -23,8 +20,7 @@ endif(COMMAND cmake_policy)
 
 add_executable(blitztest ${blitztest_SRCS})
 
-target_link_libraries(blitztest ${QT_QTCORE_LIBRARY}
-${QT_QTGUI_LIBRARY} qimageblitz)
+target_link_libraries(blitztest Qt4::QtCore Qt4::QtGui qimageblitz)
 
 install(TARGETS blitztest DESTINATION ${BIN_INSTALL_DIR})
 
