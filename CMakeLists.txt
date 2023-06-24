@@ -52,4 +52,7 @@ if(APPLE)
 endif(APPLE)
 
 add_subdirectory(blitz)
-add_subdirectory(test)
+option(ENABLE_TESTS OFF)
+if(ENABLE_TESTS)
+    add_subdirectory(test)
+endif(ENABLE_TESTS)
