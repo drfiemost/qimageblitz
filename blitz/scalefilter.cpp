@@ -373,7 +373,7 @@ bool BlitzScaleFilter::horizontalFilter(QImage *srcImg,
     int dw = destImg->width();
     QRgb pixel;
 
-    scale = blur*qMax(1.0/x_factor, 1.0);
+    scale = blur*std::max(1.0/x_factor, 1.0);
     support = scale*filterSupport[filter];
     if(support <= 0.5){
         support = float(0.5+MagickEpsilon);
@@ -383,8 +383,8 @@ bool BlitzScaleFilter::horizontalFilter(QImage *srcImg,
 
     for(x=0; x < destImg->width(); ++x){
         center = (float) (x+0.5)/x_factor;
-        start = (int)qMax((double)center-support+0.5, (double)0.0);
-        stop = (int)qMin((double)center+support+0.5, (double)srcImg->width());
+        start = (int)std::max((double)center-support+0.5, (double)0.0);
+        stop = (int)std::min((double)center+support+0.5, (double)srcImg->width());
         density=0.0;
 
         for(n=0; n < (stop-start); ++n){
@@ -519,7 +519,7 @@ bool BlitzScaleFilter::verticalFilter(QImage *srcImg,
     int dw = destImg->width();
     QRgb pixel;
 
-    scale = blur*qMax(1.0/y_factor, 1.0);
+    scale = blur*std::max(1.0/y_factor, 1.0);
     support = scale*filterSupport[filter];
     if(support <= 0.5){
         support = float(0.5+MagickEpsilon);
@@ -529,8 +529,8 @@ bool BlitzScaleFilter::verticalFilter(QImage *srcImg,
 
     for(y=0; y < destImg->height(); ++y){
         center = (float) (y+0.5)/y_factor;
-        start = (int)qMax((double)center-support+0.5, (double)0.0);
-        stop = (int)qMin((double)center+support+0.5, (double)srcImg->height());
+        start = (int)std::max((double)center-support+0.5, (double)0.0);
+        stop = (int)std::min((double)center+support+0.5, (double)srcImg->height());
         density=0.0;
 
         for(n=0; n < (stop-start); ++n){
@@ -697,13 +697,13 @@ QImage Blitz::smoothScaleFilter(QImage &img, const QSize &sz,
             i = (int)PointFilter;
         else
             i = (int)MitchellFilter;
-    x_support = blur*qMax(1.0/x_factor, 1.0)*filterSupport[i];
-    y_support = blur*qMax(1.0/y_factor, 1.0)*filterSupport[i];
-    support = qMax(x_support, y_support);
+    x_support = blur*std::max(1.0/x_factor, 1.0)*filterSupport[i];
+    y_support = blur*std::max(1.0/y_factor, 1.0)*filterSupport[i];
+    support = std::max(x_support, y_support);
     if(support < filterSupport[i])
         support = filterSupport[i];
     contribution =
-        new ContributionInfo[(int)(2.0*qMax((double)support, (double)0.5)+3)];
+        new ContributionInfo[(int)(2.0*std::max((double)support, (double)0.5)+3)];
 
     //
     // Scale

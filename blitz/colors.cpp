@@ -516,30 +516,30 @@ QImage& Blitz::intensity(QImage &img, float percent)
         unsigned char *segmentTable = new unsigned char[segmentColors];
         if(brighten){
             for(int i=0; i < segmentColors; ++i)
-                segmentTable[i] = qMin((int)(i*percent), 255);
+                segmentTable[i] = std::min((int)(i*percent), 255);
 
             int r, g, b;
             for(int i=0; i < pixels; ++i){
                 r = qRed(data[i]);
                 g = qGreen(data[i]);
                 b = qBlue(data[i]);
-                data[i] = qRgba(qMin(255, r+segmentTable[r]),
-                                qMin(255, g+segmentTable[g]),
-                                qMin(255, b+segmentTable[b]), qAlpha(data[i]));
+                data[i] = qRgba(std::min(255, r+segmentTable[r]),
+                                std::min(255, g+segmentTable[g]),
+                                std::min(255, b+segmentTable[b]), qAlpha(data[i]));
             }
         }
         else{
             for(int i=0; i < segmentColors; ++i)
-                segmentTable[i] = qMax((int)(i*percent), 0);
+                segmentTable[i] = std::max((int)(i*percent), 0);
 
             int r, g, b;
             for(int i=0; i < pixels; ++i){
                 r = qRed(data[i]);
                 g = qGreen(data[i]);
                 b = qBlue(data[i]);
-                data[i] = qRgba(qMax(0, r-segmentTable[r]),
-                                qMax(0, g-segmentTable[g]),
-                                qMax(0, b-segmentTable[b]), qAlpha(data[i]));
+                data[i] = qRgba(std::max(0, r-segmentTable[r]),
+                                std::max(0, g-segmentTable[g]),
+                                std::max(0, b-segmentTable[b]), qAlpha(data[i]));
             }
         }
         delete[] segmentTable;
@@ -583,13 +583,13 @@ QImage& Blitz::channelIntensity(QImage &img, float percent, RGBChannel channel)
     unsigned char *segmentTable = new unsigned char[segmentColors];
     if(brighten){
         for(int i=0; i < segmentColors; ++i)
-            segmentTable[i] = qMin((int)(i*percent), 255);
+            segmentTable[i] = std::min((int)(i*percent), 255);
 
         int color;
         if(channel == Red){ // and here ;-)
             for(int i=0; i < pixels; ++i){
                 color = qRed(data[i]);
-                data[i] = qRgba(qMin(255, color+segmentTable[color]),
+                data[i] = qRgba(std::min(255, color+segmentTable[color]),
                                 qGreen(data[i]), qBlue(data[i]),
                                 qAlpha(data[i]));
             }
@@ -598,7 +598,7 @@ QImage& Blitz::channelIntensity(QImage &img, float percent, RGBChannel channel)
             for(int i=0; i < pixels; ++i){
                 color = qGreen(data[i]);
                 data[i] = qRgba(qRed(data[i]),
-                                qMin(255, color+segmentTable[color]),
+                                std::min(255, color+segmentTable[color]),
                                 qBlue(data[i]), qAlpha(data[i]));
             }
         }
@@ -606,20 +606,20 @@ QImage& Blitz::channelIntensity(QImage &img, float percent, RGBChannel channel)
             for(int i=0; i < pixels; ++i){
                 color = qBlue(data[i]);
                 data[i] = qRgba(qRed(data[i]), qGreen(data[i]),
-                                qMin(255, color+segmentTable[color]),
+                                std::min(255, color+segmentTable[color]),
                                 qAlpha(data[i]));
             }
         }
     }
     else{
         for(int i=0; i < segmentColors; ++i)
-            segmentTable[i] = qMax((int)(i*percent), 0);
+            segmentTable[i] = std::max((int)(i*percent), 0);
 
         int color;
         if(channel == Red){
             for(int i=0; i < pixels; ++i){
                 color = qRed(data[i]);
-                data[i] = qRgba(qMax(0, color-segmentTable[color]),
+                data[i] = qRgba(std::max(0, color-segmentTable[color]),
                                 qGreen(data[i]), qBlue(data[i]),
                                 qAlpha(data[i]));
             }
@@ -628,7 +628,7 @@ QImage& Blitz::channelIntensity(QImage &img, float percent, RGBChannel channel)
             for(int i=0; i < pixels; ++i){
                 color = qGreen(data[i]);
                 data[i] = qRgba(qRed(data[i]),
-                                qMax(0, color-segmentTable[color]),
+                                std::max(0, color-segmentTable[color]),
                                 qBlue(data[i]), qAlpha(data[i]));
             }
         }
@@ -636,7 +636,7 @@ QImage& Blitz::channelIntensity(QImage &img, float percent, RGBChannel channel)
             for(int i=0; i < pixels; ++i){
                 color = qBlue(data[i]);
                 data[i] = qRgba(qRed(data[i]), qGreen(data[i]),
-                                qMax(0, color-segmentTable[color]),
+                                std::max(0, color-segmentTable[color]),
                                 qAlpha(data[i]));
             }
         }
@@ -997,8 +997,8 @@ QImage& Blitz::flatten(QImage &img, const QColor &ca, const QColor &cb)
     if(img.format() != QImage::Format_ARGB32_Premultiplied){
         while(ptr != end){
             mean = (qRed(*ptr) + qGreen(*ptr) + qBlue(*ptr)) / 3;
-            min = qMin(min, mean);
-            max = qMax(max, mean);
+            min = std::min(min, mean);
+            max = std::max(max, mean);
             ++ptr;
         }
     }
@@ -1007,8 +1007,8 @@ QImage& Blitz::flatten(QImage &img, const QColor &ca, const QColor &cb)
         while(ptr != end){
             pixel = BlitzPrivate::convertFromPremult(*ptr);
             mean = (qRed(pixel) + qGreen(pixel) + qBlue(pixel)) / 3;
-            min = qMin(min, mean);
-            max = qMax(max, mean);
+            min = std::min(min, mean);
+            max = std::max(max, mean);
             ++ptr;
         }
     }

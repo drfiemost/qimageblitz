@@ -145,9 +145,9 @@ QImage Blitz::gradient(const QSize &size, const QColor &ca,
             bd = (float)bDiff/2;
 
             for(x=0; x < w; x++, rd-=rfd, gd-=gfd, bd-=bfd){
-                xtable[x*3] = (unsigned char) qAbs((int)rd);
-                xtable[x*3+1] = (unsigned char) qAbs((int)gd);
-                xtable[x*3+2] = (unsigned char) qAbs((int)bd);
+                xtable[x*3] = (unsigned char) std::abs((int)rd);
+                xtable[x*3+1] = (unsigned char) std::abs((int)gd);
+                xtable[x*3+2] = (unsigned char) std::abs((int)bd);
             }
 
             rfd = (float)rDiff/h;
@@ -159,9 +159,9 @@ QImage Blitz::gradient(const QSize &size, const QColor &ca,
             bd = (float)bDiff/2;
 
             for(y=0; y < h; y++, rd-=rfd, gd-=gfd, bd-=bfd){
-                ytable[y*3] = (unsigned char) qAbs((int)rd);
-                ytable[y*3+1] = (unsigned char) qAbs((int)gd);
-                ytable[y*3+2] = (unsigned char) qAbs((int)bd);
+                ytable[y*3] = (unsigned char) std::abs((int)rd);
+                ytable[y*3+1] = (unsigned char) std::abs((int)gd);
+                ytable[y*3+2] = (unsigned char) std::abs((int)bd);
             }
 
             dw = (w+1)>>1;
@@ -170,7 +170,7 @@ QImage Blitz::gradient(const QSize &size, const QColor &ca,
             QRgb *sl1, *sl2;
             for(y = 0; y < dh; y++){
                 sl1 = (QRgb *)image.scanLine(y);
-                sl2 = (QRgb *)image.scanLine(qMax(h-y-1, y));
+                sl2 = (QRgb *)image.scanLine(std::max(h-y-1, y));
                 for(x = 0, x2 = w-1; x < dw; x++, x2--){
                     switch(eff){
                     case PyramidGradient:
@@ -180,19 +180,19 @@ QImage Blitz::gradient(const QSize &size, const QColor &ca,
                         break;
                     case RectangleGradient:
                         rgb = qRgb(rcb - rSign *
-                                   qMax(xtable[x*3], ytable[y*3]) * 2,
+                                   std::max(xtable[x*3], ytable[y*3]) * 2,
                                    gcb - gSign *
-                                   qMax(xtable[x*3+1], ytable[y*3+1]) * 2,
+                                   std::max(xtable[x*3+1], ytable[y*3+1]) * 2,
                                    bcb - bSign *
-                                   qMax(xtable[x*3+2], ytable[y*3+2]) * 2);
+                                   std::max(xtable[x*3+2], ytable[y*3+2]) * 2);
                         break;
                     case PipeCrossGradient:
                         rgb = qRgb(rcb - rSign *
-                                   qMin(xtable[x*3], ytable[y*3]) * 2,
+                                   std::min(xtable[x*3], ytable[y*3]) * 2,
                                    gcb - gSign *
-                                   qMin(xtable[x*3+1], ytable[y*3+1]) * 2,
+                                   std::min(xtable[x*3+1], ytable[y*3+1]) * 2,
                                    bcb - bSign *
-                                   qMin(xtable[x*3+2], ytable[y*3+2]) * 2);
+                                   std::min(xtable[x*3+2], ytable[y*3+2]) * 2);
                         break;
                     case EllipticGradient:
                     default:
@@ -289,12 +289,12 @@ QImage Blitz::grayGradient(const QSize &size, unsigned char ca,
             delta = (float)diff / size.width();
             val = (float)diff/2;
             for(x=0; x < size.width(); x++, val-=delta)
-                xtable[x] = (unsigned char) qAbs((int)val);
+                xtable[x] = (unsigned char) std::abs((int)val);
 
             delta = (float)diff/size.height();
             val = (float)diff/2;
             for(y=0; y < size.height(); y++, val-=delta)
-                ytable[y] = (unsigned char) qAbs((int)val);
+                ytable[y] = (unsigned char) std::abs((int)val);
 
             int w = (size.width()+1)>>1;
             int h = (size.height()+1)>>1;
@@ -302,17 +302,17 @@ QImage Blitz::grayGradient(const QSize &size, unsigned char ca,
             unsigned char *sl1, *sl2;
             for(y = 0; y < h; y++){
                 sl1 = image.scanLine(y);
-                sl2 = image.scanLine(qMax(size.height()-y-1, y));
+                sl2 = image.scanLine(std::max(size.height()-y-1, y));
                 for(x = 0, x2 = size.width()-1; x < w; x++, x2--){
                     switch(eff){
                     case PyramidGradient:
                         idx = cb-sign*(xtable[x]+ytable[y]);
                         break;
                     case RectangleGradient:
-                        idx = cb-sign*qMax(xtable[x], ytable[y])*2;
+                        idx = cb-sign*std::max(xtable[x], ytable[y])*2;
                         break;
                     case PipeCrossGradient:
-                        idx = cb-sign*qMin(xtable[x], ytable[y])*2;
+                        idx = cb-sign*std::min(xtable[x], ytable[y])*2;
                         break;
                     case EllipticGradient:
                     default:
@@ -343,8 +343,8 @@ QImage Blitz::unbalancedGradient(const QSize &size, const QColor &ca,
     int dir; // general parameter used for direction switches
     bool _xanti = (xfactor < 0); // negative on X direction
     bool _yanti = (yfactor < 0); // negative on Y direction
-    xfactor = qBound(1, qAbs(xfactor), 200);
-    yfactor = qBound(1, qAbs(yfactor), 200);
+    xfactor = qBound(1, std::abs(xfactor), 200);
+    yfactor = qBound(1, std::abs(yfactor), 200);
     //    float xbal = xfactor/5000.;
     //    float ybal = yfactor/5000.;
     float xbal = xfactor/30.0f/size.width();
@@ -432,18 +432,18 @@ QImage Blitz::unbalancedGradient(const QSize &size, const QColor &ca,
                 dir = _xanti ? x : w - 1 - x;
                 rat =  1 - std::exp( - (float)x * xbal );
 
-                xtable[dir*3] = (unsigned char) qAbs((int)(rDiff*(0.5-rat)));
-                xtable[dir*3+1] = (unsigned char) qAbs((int)(gDiff*(0.5-rat)));
-                xtable[dir*3+2] = (unsigned char) qAbs((int)(bDiff*(0.5-rat)));
+                xtable[dir*3] = (unsigned char) std::abs((int)(rDiff*(0.5-rat)));
+                xtable[dir*3+1] = (unsigned char) std::abs((int)(gDiff*(0.5-rat)));
+                xtable[dir*3+2] = (unsigned char) std::abs((int)(bDiff*(0.5-rat)));
             }
 
             for(y = 0; y < h; y++){
               dir = _yanti ? y : h - 1 - y;
               rat =  1 - std::exp( - (float)y * ybal );
 
-              ytable[dir*3] = (unsigned char) qAbs((int)(rDiff*(0.5-rat)));
-              ytable[dir*3+1] = (unsigned char) qAbs((int)(gDiff*(0.5-rat)));
-              ytable[dir*3+2] = (unsigned char) qAbs((int)(bDiff*(0.5-rat)));
+              ytable[dir*3] = (unsigned char) std::abs((int)(rDiff*(0.5-rat)));
+              ytable[dir*3+1] = (unsigned char) std::abs((int)(gDiff*(0.5-rat)));
+              ytable[dir*3+2] = (unsigned char) std::abs((int)(bDiff*(0.5-rat)));
             }
 
             for(y = 0; y < h; y++){
@@ -456,19 +456,19 @@ QImage Blitz::unbalancedGradient(const QSize &size, const QColor &ca,
                     }
                     else if (eff == RectangleGradient){
                         *p++ = qRgb(rcb - rSign *
-                                    qMax(xtable[x*3], ytable[y*3]) * 2,
+                                    std::max(xtable[x*3], ytable[y*3]) * 2,
                                     gcb - gSign *
-                                    qMax(xtable[x*3+1], ytable[y*3+1]) * 2,
+                                    std::max(xtable[x*3+1], ytable[y*3+1]) * 2,
                                     bcb - bSign *
-                                    qMax(xtable[x*3+2], ytable[y*3+2]) * 2);
+                                    std::max(xtable[x*3+2], ytable[y*3+2]) * 2);
                     }
                     else if (eff == PipeCrossGradient){
                         *p++ = qRgb(rcb - rSign *
-                                    qMin(xtable[x*3], ytable[y*3]) * 2,
+                                    std::min(xtable[x*3], ytable[y*3]) * 2,
                                     gcb - gSign *
-                                    qMin(xtable[x*3+1], ytable[y*3+1]) * 2,
+                                    std::min(xtable[x*3+1], ytable[y*3+1]) * 2,
                                     bcb - bSign *
-                                    qMin(xtable[x*3+2], ytable[y*3+2]) * 2);
+                                    std::min(xtable[x*3+2], ytable[y*3+2]) * 2);
                     }
                     else if (eff == EllipticGradient){
                         *p++ = qRgb(rcb - rSign *
@@ -505,8 +505,8 @@ QImage Blitz::grayUnbalancedGradient(const QSize &size, unsigned char ca,
     int dir; // general parameter used for direction switches
     bool _xanti = (xfactor < 0); // negative on X direction
     bool _yanti = (yfactor < 0); // negative on Y direction
-    xfactor = qBound(1, qAbs(xfactor), 200);
-    yfactor = qBound(1, qAbs(yfactor), 200);
+    xfactor = qBound(1, std::abs(xfactor), 200);
+    yfactor = qBound(1, std::abs(yfactor), 200);
     float xbal = xfactor/30.0f/size.width();
     float ybal = yfactor/30.0f/size.height();
     float rat;
@@ -570,13 +570,13 @@ QImage Blitz::grayUnbalancedGradient(const QSize &size, unsigned char ca,
             for(x = 0; x < w; x++){
                 dir = _xanti ? x : w - 1 - x;
                 rat =  1 - std::exp( - (float)x * xbal );
-                xtable[dir] = (unsigned char) qAbs((int)(diff*(0.5-rat)));
+                xtable[dir] = (unsigned char) std::abs((int)(diff*(0.5-rat)));
             }
 
             for(y = 0; y < h; y++){
                 dir = _yanti ? y : h - 1 - y;
                 rat =  1 - std::exp( - (float)y * ybal );
-                ytable[dir] = (unsigned char) qAbs((int)(diff*(0.5-rat)));
+                ytable[dir] = (unsigned char) std::abs((int)(diff*(0.5-rat)));
             }
 
             for(y = 0; y < h; y++){
@@ -585,9 +585,9 @@ QImage Blitz::grayUnbalancedGradient(const QSize &size, unsigned char ca,
                     if (eff == PyramidGradient)
                         *p++ = cb-sign*(xtable[x]+ytable[y]);
                     else if (eff == RectangleGradient)
-                        *p++ = cb -sign*qMax(xtable[x], ytable[y])*2;
+                        *p++ = cb -sign*std::max(xtable[x], ytable[y])*2;
                     else if (eff == PipeCrossGradient)
-                        *p++ = cb-sign*qMin(xtable[x], ytable[y])*2;
+                        *p++ = cb-sign*std::min(xtable[x], ytable[y])*2;
                     else if (eff == EllipticGradient)
                         *p++ = cb-sign * (int)std::sqrt((xtable[x]*xtable[x] +
                                                          ytable[y]*ytable[y])*2.0);

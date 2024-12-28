@@ -692,9 +692,9 @@ QImage Blitz::edge(QImage &img)
             SOBEL(-2, 0, *s); SOBEL(0, 0, *s); ++s; SOBEL(2, 0, *s);
             s = scanblock[2];
             SOBEL(-1, -1, *s); SOBEL(0, -2, *s); ++s; SOBEL(1, -1, *s);
-            xR = qAbs(xR)+qAbs(yR); xG = qAbs(xG)+qAbs(yG);
-            xB = qAbs(xB)+qAbs(yB);
-            *dest++ = qRgb(qMin(xR, 255), qMin(xG, 255), qMin(xB, 255));
+            xR = std::abs(xR)+std::abs(yR); xG = std::abs(xG)+std::abs(yG);
+            xB = std::abs(xB)+std::abs(yB);
+            *dest++ = qRgb(std::min(xR, 255), std::min(xG, 255), std::min(xB, 255));
 
             // x == 1, process middle of image
             for(x=1; x < w-1; ++x){
@@ -706,9 +706,9 @@ QImage Blitz::edge(QImage &img)
                 s = scanblock[2];
                 SOBEL(-1, -1, *s); ++s; SOBEL(0, -2, *s); ++s; SOBEL(1, -1, *s);
                 ++scanblock[0]; ++scanblock[1]; ++scanblock[2];
-                xR = qAbs(xR)+qAbs(yR); xG = qAbs(xG)+qAbs(yG);
-                xB = qAbs(xB)+qAbs(yB);
-                *dest++ = qRgb(qMin(xR, 255), qMin(xG, 255), qMin(xB, 255));
+                xR = std::abs(xR)+std::abs(yR); xG = std::abs(xG)+std::abs(yG);
+                xB = std::abs(xB)+std::abs(yB);
+                *dest++ = qRgb(std::min(xR, 255), std::min(xG, 255), std::min(xB, 255));
             }
 
             // x == w-1, double over last pixel
@@ -719,9 +719,9 @@ QImage Blitz::edge(QImage &img)
             SOBEL(-2, 0, *s); ++s; SOBEL(0, 0, *s); SOBEL(2, 0, *s);
             s = scanblock[2];
             SOBEL(-1, -1, *s); ++s; SOBEL(0, -2, *s); SOBEL(1, -1, *s);
-            xR = qAbs(xR)+qAbs(yR); xG = qAbs(xG)+qAbs(yG);
-            xB = qAbs(xB)+qAbs(yB);
-            *dest++ = qRgb(qMin(xR, 255), qMin(xG, 255), qMin(xB, 255));
+            xR = std::abs(xR)+std::abs(yR); xG = std::abs(xG)+std::abs(yG);
+            xB = std::abs(xB)+std::abs(yB);
+            *dest++ = qRgb(std::min(xR, 255), std::min(xG, 255), std::min(xB, 255));
         }
     }
     return(buffer);
@@ -758,7 +758,7 @@ QImage Blitz::swirl(QImage &img, float degrees)
 
     x_center = w/2.0;
     y_center = h/2.0;
-    radius = qMax(x_center, y_center);
+    radius = std::max(x_center, y_center);
     x_scale = y_scale = 1.0;
     if(w > h)
         y_scale = (float)(w/h);

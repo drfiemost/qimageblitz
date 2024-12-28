@@ -147,7 +147,7 @@ inline void BlitzPrivate::hull(int x_offset, int y_offset, int w, int h,
 
 inline int BlitzPrivate::brightness(QRgb rgb)
 {
-    return(qMax(qRed((rgb)), qMax(qBlue((rgb)), qGreen((rgb)))));
+    return(std::max(qRed((rgb)), std::max(qBlue((rgb)), qGreen((rgb)))));
 }
 
 inline QRgb BlitzPrivate::setAlpha(QRgb rgb, unsigned int a)
