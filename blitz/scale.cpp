@@ -279,7 +279,7 @@ QImageScaleInfo* QImageScale::qimageCalcScaleInfo(const QImage &img,
         return(NULL);
     memset(isi, 0, sizeof(QImageScaleInfo));
 
-    isi->xup_yup = (qAbs(dw) >= sw) + ((qAbs(dh) >= sh) << 1);
+    isi->xup_yup = (std::abs(dw) >= sw) + ((std::abs(dh) >= sh) << 1);
 
     isi->xpoints = qimageCalcXPoints(img.width(), scw);
     if(!isi->xpoints)
