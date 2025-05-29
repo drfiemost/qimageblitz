@@ -628,9 +628,9 @@ QImage Blitz::convolveInteger(QImage &img, int matrix_size,
                             ++matrix_x; ++m; ++s;
                         }
                     }
-                    *dest++ = qRgba((unsigned char)qBound(0, r, 255),
-                                    (unsigned char)qBound(0, g, 255),
-                                    (unsigned char)qBound(0, b, 255),
+                    *dest++ = qRgba((unsigned char)std::clamp(r, 0, 255),
+                                    (unsigned char)std::clamp(g, 0, 255),
+                                    (unsigned char)std::clamp(b, 0, 255),
                                     qAlpha(*src++));
                 }
                 // Okay, now process the middle part where the entire neighborhood
@@ -644,9 +644,9 @@ QImage Blitz::convolveInteger(QImage &img, int matrix_size,
                             CONVOLVE_ACC(*m, *s);
                         }
                     }
-                    *dest++ = qRgba((unsigned char)qBound(0, r, 255),
-                                    (unsigned char)qBound(0, g, 255),
-                                    (unsigned char)qBound(0, b, 255),
+                    *dest++ = qRgba((unsigned char)std::clamp(r, 0, 255),
+                                    (unsigned char)std::clamp(g, 0, 255),
+                                    (unsigned char)std::clamp(b, 0, 255),
                                     qAlpha(*src++));
                 }
                 // Finally process the right part where the neighborhood extends off
@@ -668,9 +668,9 @@ QImage Blitz::convolveInteger(QImage &img, int matrix_size,
                             ++matrix_x, ++m;
                         }
                     }
-                    *dest++ = qRgba((unsigned char)qBound(0, r, 255),
-                                    (unsigned char)qBound(0, g, 255),
-                                    (unsigned char)qBound(0, b, 255),
+                    *dest++ = qRgba((unsigned char)std::clamp(r, 0, 255),
+                                    (unsigned char)std::clamp(g, 0, 255),
+                                    (unsigned char)std::clamp(b, 0, 255),
                                     qAlpha(*src++));
                 }
             }
@@ -845,9 +845,9 @@ QImage Blitz::convolveInteger(QImage &img, int matrix_size,
                         }
                     }
                     r /= divisor; g /= divisor; b /= divisor;
-                    *dest++ = qRgba((unsigned char)qBound(0, r, 255),
-                                    (unsigned char)qBound(0, g, 255),
-                                    (unsigned char)qBound(0, b, 255),
+                    *dest++ = qRgba((unsigned char)std::clamp(r, 0, 255),
+                                    (unsigned char)std::clamp(g, 0, 255),
+                                    (unsigned char)std::clamp(b, 0, 255),
                                     qAlpha(*src++));
                 }
                 // Okay, now process the middle part where the entire neighborhood
@@ -862,9 +862,9 @@ QImage Blitz::convolveInteger(QImage &img, int matrix_size,
                         }
                     }
                     r /= divisor; g /= divisor; b /= divisor;
-                    *dest++ = qRgba((unsigned char)qBound(0, r, 255),
-                                    (unsigned char)qBound(0, g, 255),
-                                    (unsigned char)qBound(0, b, 255),
+                    *dest++ = qRgba((unsigned char)std::clamp(r, 0, 255),
+                                    (unsigned char)std::clamp(g, 0, 255),
+                                    (unsigned char)std::clamp(b, 0, 255),
                                     qAlpha(*src++));
                 }
                 // Finally process the right part where the neighborhood extends off
@@ -887,9 +887,9 @@ QImage Blitz::convolveInteger(QImage &img, int matrix_size,
                         }
                     }
                     r /= divisor; g /= divisor; b /= divisor;
-                    *dest++ = qRgba((unsigned char)qBound(0, r, 255),
-                                    (unsigned char)qBound(0, g, 255),
-                                    (unsigned char)qBound(0, b, 255),
+                    *dest++ = qRgba((unsigned char)std::clamp(r, 0, 255),
+                                    (unsigned char)std::clamp(g, 0, 255),
+                                    (unsigned char)std::clamp(b, 0, 255),
                                     qAlpha(*src++));
                 }
             }

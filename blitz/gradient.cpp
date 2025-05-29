@@ -343,8 +343,8 @@ QImage Blitz::unbalancedGradient(const QSize &size, const QColor &ca,
     int dir; // general parameter used for direction switches
     bool _xanti = (xfactor < 0); // negative on X direction
     bool _yanti = (yfactor < 0); // negative on Y direction
-    xfactor = qBound(1, std::abs(xfactor), 200);
-    yfactor = qBound(1, std::abs(yfactor), 200);
+    xfactor = std::clamp(std::abs(xfactor), 1, 200);
+    yfactor = std::clamp(std::abs(yfactor), 1, 200);
     //    float xbal = xfactor/5000.;
     //    float ybal = yfactor/5000.;
     float xbal = xfactor/30.0f/size.width();
@@ -505,8 +505,8 @@ QImage Blitz::grayUnbalancedGradient(const QSize &size, unsigned char ca,
     int dir; // general parameter used for direction switches
     bool _xanti = (xfactor < 0); // negative on X direction
     bool _yanti = (yfactor < 0); // negative on Y direction
-    xfactor = qBound(1, std::abs(xfactor), 200);
-    yfactor = qBound(1, std::abs(yfactor), 200);
+    xfactor = std::clamp(std::abs(xfactor), 1, 200);
+    yfactor = std::clamp(std::abs(yfactor), 1, 200);
     float xbal = xfactor/30.0f/size.width();
     float ybal = yfactor/30.0f/size.height();
     float rat;

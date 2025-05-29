@@ -1022,8 +1022,8 @@ QImage& Blitz::modulate(QImage &img, QImage &modImg, bool reverse,
                         b += (b-128) * mod/128;
                     }
                 }
-                *src = qRgba(qBound(0, r, 255), qBound(0, g, 255),
-                             qBound(0, b, 255), qAlpha(*src));
+                *src = qRgba(std::clamp(r, 0, 255), std::clamp(g, 0, 255),
+                             std::clamp(b, 0, 255), qAlpha(*src));
             }
             else if(type == Saturation || type == HueShift){
                 mod = (channel == Red) ? qRed(color2) :
@@ -1033,8 +1033,8 @@ QImage& Blitz::modulate(QImage &img, QImage &modImg, bool reverse,
                 mod = mod*factor/50;
                 hsv.convertRGB2HSV(color1);
                 if(type == Saturation)
-                    hsv.setSaturation(qBound(0, hsv.saturation()-
-                                             hsv.saturation()*mod/256, 255));
+                    hsv.setSaturation(std::clamp(hsv.saturation()-
+                                             hsv.saturation()*mod/256, 0, 255));
                 else{
                     int h = hsv.hue() + mod;
                     while(h<0) h+=360;

@@ -79,8 +79,8 @@ private:
 inline unsigned int InlineInterpolate::interpolate(float x_offset,
                                                    float y_offset)
 {
-    int x = qBound(0, (int)x_offset, w-2);
-    int y = qBound(0, (int)y_offset, h-2);
+    int x = std::clamp((int)x_offset, 0, w-2);
+    int y = std::clamp((int)y_offset, 0, h-2);
 
     if(truecolor){
         p = *(((QRgb *)ptr)+(y*w)+x);

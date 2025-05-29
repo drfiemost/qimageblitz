@@ -385,7 +385,7 @@ QImage& Blitz::intensity(QImage &img, float percent)
         data = (unsigned int *)img.scanLine(0);
     }
 
-    percent = qBound(-1.0f, percent, 1.0f);
+    percent = std::clamp(percent, -1.0f, 1.0f);
     bool brighten = (percent >= 0);
     if(percent < 0)
         percent = -percent;
@@ -575,7 +575,7 @@ QImage& Blitz::channelIntensity(QImage &img, float percent, RGBChannel channel)
         data = (unsigned int *)img.scanLine(0);
     }
 
-    percent = qBound(-1.0f, percent, 1.0f);
+    percent = std::clamp(percent, -1.0f, 1.0f);
     bool brighten = (percent >= 0);
     if(percent < 0)
         percent = -percent;
@@ -654,7 +654,7 @@ QImage& Blitz::desaturate(QImage &img, float desat)
     if(img.depth() < 8)
         img = img.convertToFormat(QImage::Format_Indexed8);
 
-    desat = qBound(0.0f, desat, 1.0f);
+    desat = std::clamp(desat, 0.0f, 1.0f);
 
     unsigned int *data, *end;
     InlineHSV hsv;
@@ -910,7 +910,7 @@ QImage& Blitz::fade(QImage &img, float val, const QColor &color)
     if(img.isNull() || img.depth() == 1)
         return(img);
 
-    val = qBound(0.0f, val, 1.0f);
+    val = std::clamp(val, 0.0f, 1.0f);
     unsigned char tbl[256];
     for(int i=0; i < 256; ++i)
         tbl[i] = (int)(val * i + 0.5);
